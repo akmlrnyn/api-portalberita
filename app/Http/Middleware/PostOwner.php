@@ -26,6 +26,6 @@ class PostOwner
                 'message' => 'salah user broski'
             ], 404);
         }
-        return response()->json($currentUser);
+        return $next($request);
     }
 }
