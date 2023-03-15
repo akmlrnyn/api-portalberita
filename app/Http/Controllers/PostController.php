@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index(){
         $posts = Post::all();
         // return response()->json(['data' => $post]);
-        return PostResource::collection($posts); //menggunakan PostResource
+        return PostDetailResource::collection($posts->loadMissing('writer:id,username')); //gunakan loadmissing untuk menampilkan data tertentu yang ada di table, searah dengan whenLoaded()
     }
 
     public function show($id){
@@ -32,5 +32,16 @@ class PostController extends Controller
         $request['author'] = Auth::user()->id;
         $post = Post::create($request->all());
         return new PostDetailResource($post->loadMissing('writer:id,username'));
+    }
+
+    public function update(Request $request){
+        $request -> validate([
+            'title' => 'required|max:255',
+            'news_content' => 'required',
+
+        ]);
+
+        // // return response()->json('sudah dapat diigunakan');
+        // $request['author'] = Auth::user()->id;
     }
 }
