@@ -48,4 +48,13 @@ class PostController extends Controller
         // $request['author'] = Auth::user()->id;
         return new PostDetailResource($post->loadMissing('writer:id,username'));
     }
+
+    public function delete($id){
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return response()->json([
+           'message' => "keapus broski"
+        ]);
+    }
 }
