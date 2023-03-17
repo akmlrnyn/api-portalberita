@@ -17,6 +17,7 @@ class PostDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'image' => $this -> image,
             'news_content' => $this->news_content,
             'author_id' => $this->author,
             'writer' => $this -> whenLoaded('writer') ,
