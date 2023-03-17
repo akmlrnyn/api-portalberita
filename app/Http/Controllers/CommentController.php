@@ -22,8 +22,21 @@ class CommentController extends Controller
 
     public function update(Request $request, $id){
         $request->validate([
-
+            'commnets_content' => 'required'
         ]);
-        
+
+        $comment = Comment::findOrFail($id);
+        $comment->update($request->only('commnets_content'));
+
+        return new CommentResource($comment->loadMissing(['commentator:id,username']));
+
+    }
+
+    public function delete($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return new CommentResource($comment->loadMissing(['commentator:id,username']));
     }
 }
