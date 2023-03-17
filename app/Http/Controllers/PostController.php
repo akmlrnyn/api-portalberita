@@ -56,6 +56,18 @@ class PostController extends Controller
 
         ]);
 
+        if ($request -> file) {
+            $fileName = $this -> generateRandomString();
+            $extension = $request -> file -> extension();
+
+            $image = $fileName. '.' .$extension;
+            Storage::putFileAs('image', $request->file, $image);
+
+
+        }
+
+        $request['image'] = $image;
+
         $post = Post::findOrFail($id);
         $post->update($request -> all());
 
