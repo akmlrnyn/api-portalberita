@@ -13,11 +13,11 @@ class PostController extends Controller
     public function index(){
         $posts = Post::all();
         // return response()->json(['data' => $post]);
-        return PostDetailResource::collection($posts->loadMissing('writer:id,username')); //gunakan loadmissing untuk menampilkan data tertentu yang ada di table, searah dengan whenLoaded()
+        return PostDetailResource::collection($posts->loadMissing('writer:id,username', 'comments:id,post_id,user_id,commnets_content')); //gunakan loadmissing untuk menampilkan data tertentu yang ada di table, searah dengan whenLoaded()
     }
 
     public function show($id){
-        $post = Post::with('writer:id,username')->findOrFail($id);
+        $post = Post::with('writer:id,username', 'comments:id,post_id,user_id,commnets_content')->findOrFail($id);
         return new PostDetailResource($post);
     }
 
