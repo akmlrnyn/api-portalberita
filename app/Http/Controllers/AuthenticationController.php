@@ -38,4 +38,19 @@ class AuthenticationController extends Controller
         $user = Auth::user();
         return response()->json($user);
     }
+
+    public function register(Request $request){
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'nullable',
+        //     'username' => 'required',
+        //     'email' => 'required|email',
+        //     'password' => 'required|password'
+
+        // ]);
+
+        $user = User::create(Request(['firstname', 'lastname', 'username', 'email', 'password']));
+        auth()->login($user);
+        return $user->createToken('user login')->plainTextToken;
+    }
 }
